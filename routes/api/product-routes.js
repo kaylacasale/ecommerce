@@ -112,11 +112,26 @@ router.get('/:id', (req, res) => {
 //   price: 200.00,
 //   stock: 5,
 //   tagIds: [1, 2, 3, 4]
+//* enter object in JSON format via Postman
+// {
+//   "product_name": "Toothbrush",
+//   "price": 200.00,
+//   "stock": 5,
+//   "tagIds": 1
+// }
+//* Postman response: 
+// {
+//   "id": 6,
+//   "product_name": "Toothbrush",
+//   "price": 200,
+//   "stock": 5
+// }
 // }//* use async function with await to relieve promises
 //* returned on console: 
 // INSERT INTO `product` (`id`,`product_name`,`price`,`stock`) VALUES (DEFAULT,?,?,?);
 // product {
 //   dataValues: { id: 6, product_name: 'Toothbrush', price: 200, stock: 5 }
+
 router.post('/', async (req, res) => {
   try {
     const newProduct = await Product.create({
@@ -177,6 +192,60 @@ router.post('/', async (req, res) => {
 // });
 
 // update product
+// router.put('/:id', (req, res) => {
+//   // update product data
+//   Product.update(req.body, {
+//     where: {
+//       id: req.params.id,
+//     },
+//   })
+//     .then((product) => {
+//       // find all associated tags from ProductTag
+//       // console.log(product)
+//       return ProductTag.findAll({ where: { product_id: req.params.id } });
+//     })
+//     .then((productTags) => {
+//       // get list of current tag_ids
+//       const productTagIds = productTags.map((tag_id) =>
+//         tag_id.get({ plain: true }));
+//       // create filtered list of new tag_ids
+//       const newProductTags = req.body.tagIds
+//         .filter((tag_id) => !productTagIds.includes(tag_id))
+//         .map((tag_id) => {
+//           return {
+//             product_id: req.params.id,
+//             tag_id,
+//           };
+//         });
+//       // figure out which ones to remove
+//       const productTagsToRemove = productTags
+//         .filter(({ tag_id }) => !req.body.tagIds.includes(tag_id))
+//         .map(({ id }) => id);
+
+//       // run both actions
+//       return Promise.all([
+//         ProductTag.destroy({ where: { id: productTagsToRemove } }),
+//         ProductTag.bulkCreate(newProductTags),
+//       ]);
+//     })
+//     .then((updatedProductTags) => res.json(updatedProductTags))
+//     .catch((err) => {
+//       // console.log(err);
+//       res.status(400).json(err);
+//     });
+// });
+//* Postman URL example: 'http://localhost:3001/api/products/4' 
+//* Postman JSON Body entry:
+// {
+//   "product_name": "Toothbrush",
+//   "price": 200.00,
+//   "stock": 5,
+//   "tagIds": 1
+// }
+//* TO CHECK: do GET request to same id
+//* GET URL: 'http://localhost:3001/api/products/4'
+//* updated object should include values above
+//* update product - PUT route
 router.put('/:id', (req, res) => {
   // update product data
   Product.update(req.body, {
@@ -187,6 +256,7 @@ router.put('/:id', (req, res) => {
     .then((product) => {
       // find all associated tags from ProductTag
       return ProductTag.findAll({ where: { product_id: req.params.id } });
+
     })
     .then((productTags) => {
       // get list of current tag_ids
@@ -217,7 +287,6 @@ router.put('/:id', (req, res) => {
       res.status(400).json(err);
     });
 });
-
 router.delete('/:id', (req, res) => {
   // delete one product by its `id` value
 });
