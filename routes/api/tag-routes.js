@@ -106,7 +106,7 @@ router.put('/:id', (req, res) => {
         return;
       }
       res.json(updateTagData)
-      console.log(updateTagData, 'updated tag_name array through tag-routes')
+      console.log(updateTagData, 'updated tag_name  through tag-routes')
 
     })
     .catch(err => {
@@ -115,6 +115,9 @@ router.put('/:id', (req, res) => {
     })
 });
 
+//* Postman url example: 'http://localhost:3001/api/tags/3'
+//* will delete tag_name with id=3 and return '1'
+//* DELETE FROM `tag` WHERE `id` = '5'
 router.delete('/:id', (req, res) => {
   // delete on tag by its `id` value
   Tag.destroy({
@@ -127,7 +130,10 @@ router.delete('/:id', (req, res) => {
         res.status(404).json({ message: 'No tag found with this id!' });
         return;
       }
-      res.json(deleteTagData);
+      //* DELETE FROM `tag` WHERE `id` = '8'
+      //* 1 tag_name deleted from tags with id= 8
+      res.json(deleteTagData)
+      console.log(`${deleteTagData} tag_name deleted from tags with id= ${req.params.id}`);
 
     }))
     .catch(err => {
