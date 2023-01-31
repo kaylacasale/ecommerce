@@ -10,7 +10,9 @@ Product.belongsTo(Category, {
 })
 // Categories have many Products
 Category.hasMany(Product, {
-  foreignKey: 'category_id'
+  foreignKey: 'category_id',
+  onDelete: 'SET NULL'
+
 })
 // Products belongToMany Tags (through ProductTag)
 Product.belongsToMany(Tag, {

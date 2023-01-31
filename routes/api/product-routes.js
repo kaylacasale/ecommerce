@@ -91,36 +91,90 @@ router.get('/:id', (req, res) => {
 });
 
 // create new product
-router.post('/', (req, res) => {
-  /* req.body should look like this...
-    {
-      product_name: "Basketball",
-      price: 200.00,
-      stock: 3,
-      tagIds: [1, 2, 3, 4]
-    }
-  */
-  Product.create(req.body)
-    .then((product) => {
-      // if there's product tags, we need to create pairings to bulk create in the ProductTag model
-      if (req.body.tagIds.length) {
-        const productTagIdArr = req.body.tagIds.map((tag_id) => {
-          return {
-            product_id: product.id,
-            tag_id,
-          };
-        });
-        return ProductTag.bulkCreate(productTagIdArr);
-      }
-      // if no product tags, just respond
-      res.status(200).json(product);
+// Product.create({
+//   product_name: req.body.product_name,
+//   price: req.body.price,
+//   stock: req.body.stock,
+//   category_id: req.body.category_id,
+//   tagIds: req.body.tag_id
+// })
+/* req.body should look like this...
+  {
+    product_name: "Basketball",
+    price: 200.00,
+    stock: 3,
+    tagIds: [1, 2, 3, 4]
+  }
+*/
+
+// {
+//   product_name: "Toothbrush",
+//   price: 200.00,
+//   stock: 5,
+//   tagIds: [1, 2, 3, 4]
+// }//* use async function with await to relieve promises
+//* returned on console: 
+// INSERT INTO `product` (`id`,`product_name`,`price`,`stock`) VALUES (DEFAULT,?,?,?);
+// product {
+//   dataValues: { id: 6, product_name: 'Toothbrush', price: 200, stock: 5 }
+router.post('/', async (req, res) => {
+  try {
+    const newProduct = await Product.create({
+      ...req.body,
+      product_name: req.body.product_name,
+      price: req.body.price,
+      stock: req.body.stock,
+      tagIds: req.body.tag_id,
     })
-    .then((productTagIds) => res.status(200).json(productTagIds))
-    .catch((err) => {
-      console.log(err);
-      res.status(400).json(err);
-    });
-});
+    if (req.body.tagIds.length) {
+      const productTagIdArr = req.body.tagIds.map((tag_id) => {
+        return {
+          product_id: product.id,
+          tag_id,
+        };
+      });
+      const productTagIds = await ProductTag.bulkCreate(productTagIdArr);
+      res.status(200).json(productTagIds)
+
+    }
+    res.status(200).json(newProduct)
+    console.log(newProduct)
+
+  } catch (err) {
+    res.status(400).json(err);
+  }
+})
+
+
+//   Product.create({
+//     product_name: req.body.product_name,
+//     price: req.body.price,
+//     stock: req.body.stock,
+//     category_id: req.body.category_id,
+//     tagIds: req.body.tag_id
+//   })
+//     .then((product) => {
+//       //* map through tag_id's array 
+//       // if there's product tags, we need to create pairings to bulk create in the ProductTag model
+//       if (req.body.tagIds.length) {
+//         const productTagIdArr = req.body.tagIds.map((tag_id) => {
+//           return {
+//             product_id: product.id,
+//             tag_id,
+//           };
+//         });
+//         //* ProductTag model is a through table with 'product_id' and 'tag_id'
+//         return ProductTag.bulkCreate(productTagIdArr);
+//       }
+//       // if no product tags, just respond
+//       res.status(200).json(product);
+//     })
+//     .then((productTagIds) => res.status(200).json(productTagIds))
+//     .catch((err) => {
+//       console.log(err);
+//       res.status(400).json(err);
+//     });
+// });
 
 // update product
 router.put('/:id', (req, res) => {
