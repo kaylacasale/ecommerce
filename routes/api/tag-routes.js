@@ -24,7 +24,7 @@ router.get('/', (req, res) => {
   })
     .then(tagData => {
       console.log(tagData)
-      res.json(tagData);
+      res.status(200).json(tagData);
     })
     .catch((err) => {
       console.log(err);
@@ -37,6 +37,7 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
   // find a single tag by its `id`
   // be sure to include its associated Product data
+  //* find rag by primary key (include attributes listed and product model with its own attributes listed)
   Tag.findByPk(req.params.id, {
     attributes: [
       'id',
@@ -59,7 +60,7 @@ router.get('/:id', (req, res) => {
   })
     .then(tagData => {
       console.log(tagData);
-      res.json(tagData);
+      res.status(200).json(tagData);
     })
     .catch((err) => {
       console.log(err)
@@ -69,6 +70,22 @@ router.get('/:id', (req, res) => {
 
 router.post('/', (req, res) => {
   // create a new tag
+  //* in order to do update route below, specify data input being sent (tag_name)
+  //* Postman route: 'http://localhost:3001/api/tags/'
+  //* enter object with 'tag_name':
+  //* {"tag_name": hip hop music}
+  //* send to post route to add new tag to db
+  //* response example: {"id": 9}
+  Tag.create({
+    tag_name: req.body.tag_name,
+  })
+    .then(newTagData => {
+      res.status(200).json(newTagData)
+    })
+    .catch((err) => {
+      console.log(err)
+      res.status(500).json(err);
+    })
 });
 
 router.put('/:id', (req, res) => {
