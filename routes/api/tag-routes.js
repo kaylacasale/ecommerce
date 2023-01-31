@@ -7,7 +7,7 @@ router.get('/', (req, res) => {
   Tag.findAll({
     attributes: [
       'id',
-      'tage_name',
+      'tag_name',
     ],
     include: [
       {
@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
           'id',
           'product_name',
           'price',
-          'stocks',
+          'stock',
           'category_id',
         ]
       }
