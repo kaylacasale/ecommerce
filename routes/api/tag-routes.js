@@ -73,9 +73,9 @@ router.post('/', (req, res) => {
   //* in order to do update route below, specify data input being sent (tag_name)
   //* Postman route: 'http://localhost:3001/api/tags/'
   //* enter object with 'tag_name':
-  //* {"tag_name": hip hop music}
+  //* Postman body example entry: {"tag_name": hip hop music}
   //* send to post route to add new tag to db
-  //* response example: {"id": 9}
+  //* Postman response example: {"id": 9}
   Tag.create({
     tag_name: req.body.tag_name,
   })
@@ -90,6 +90,24 @@ router.post('/', (req, res) => {
 
 router.put('/:id', (req, res) => {
   // update a tag's name by its `id` value
+  Tag.update(req.body, {
+    where: {
+      id: req.params.id
+    }
+  })
+    .then(updateTagData => {
+      if (!updateTagData) {
+        res.status(404).json({ message: 'No tag found with this id! Sorry :(' })
+        return;
+      }
+      res.json(updateTagData)
+      console.log(updateTagData, 'updated tag_name array through tag-routes')
+
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    })
 });
 
 router.delete('/:id', (req, res) => {
