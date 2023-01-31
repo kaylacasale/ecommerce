@@ -24,9 +24,11 @@ router.get('/', (req, res) => {
   })
     .then(tagData => {
       console.log(tagData)
+      res.json(tagData);
     })
     .catch((err) => {
       console.log(err);
+      res.status(500).json(err);
     })
   // find all tags
   // be sure to include its associated Product data
@@ -35,6 +37,34 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
   // find a single tag by its `id`
   // be sure to include its associated Product data
+  Tag.findByPk(req.params.id, {
+    attributes: [
+      'id',
+      'tag_name',
+    ],
+    include: [
+      {
+        model: Product,
+        attributes: [
+          'id',
+          'product_name',
+          'price',
+          'stock',
+          'category_id',
+        ]
+
+      }
+    ]
+
+  })
+    .then(tagData => {
+      console.log(tagData);
+      res.json(tagData);
+    })
+    .catch((err) => {
+      console.log(err)
+      res.status(500).json(err);
+    })
 });
 
 router.post('/', (req, res) => {
