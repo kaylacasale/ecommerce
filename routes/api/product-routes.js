@@ -287,6 +287,11 @@ router.put('/:id', (req, res) => {
       res.status(400).json(err);
     });
 });
+
+//* Postman DELETE request URL (example): 'http://localhost:3001/api/products/4'
+//* Postman DELETE response: '1'
+//* console response: 'DELETE FROM `product` WHERE `id` = '4'
+//* console.log response:'1 product deleted from product db with id=4'
 router.delete('/:id', (req, res) => {
   // delete one product by its `id` value
   Product.destroy({
