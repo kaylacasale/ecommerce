@@ -26,6 +26,7 @@ router.get('/', (req, res) => {
       'id',
       'category_name',
     ],
+    // be sure to include its associated Products
     include: [
       {
         model: Product,
@@ -39,19 +40,43 @@ router.get('/', (req, res) => {
     ]
   })
     .then((categories) => {
-      res.json(categories)
+      res.status(200).json(categories)
       console.log(categories)
     })
     .catch((err) => {
       console.log(err);
       res.status(500).json(err);
     })
-  // be sure to include its associated Products
+
 });
 
 router.get('/:id', (req, res) => {
   // find one category by its `id` value
-  // be sure to include its associated Products
+  Category.findByPk(req.params.id, {
+    attributes: [
+      'id',
+      'category_name',
+    ],
+    // be sure to include its associated Products
+    include: {
+      model: Product,
+      attributes: [
+        'id',
+        'product_name',
+        'price',
+        'category_id',
+      ]
+    }
+  })
+    .then((category) => {
+      console.log(category, `find category with id= ${req.params.id} by primary key in category-routes`);
+      res.status(200).json(category);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    })
+
 });
 
 router.post('/', (req, res) => {
