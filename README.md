@@ -14,10 +14,10 @@ SO THAT my company can compete with other e-commerce companies
 * [Description](#description)
 * [Installation](#installation)
 * [Usage](#usage)
-* [Walk-through Video](#walk-through-video)
 * [Built With](#built-with)
 * [ERD](#erd)
-* [Database - MySQL Tables](#database---mysql-tables)
+* [Walkthrough Video](#walk-through-video)
+
 
 ## Description
 E-Commerce web development has two faces- 1) Front-end development 2) Back-end development. This application focuses on the back-end using MySQL2 and Sequelize packages to connect the Express.js API to a MySQL database and the `dotenv` package and use environment variables to store sensitive data (e.g. username, password, and database name). Lastly, using any API platform that allows developers to design, build, test, and iterate their APIs (e.g. Insomnia), I test all controller routes (`GET`, `POST`, `PUT`, `DELETE`) through **Postman** with the help of command-line functions in the ScreenCasitfy walkthrough-video below!
@@ -80,7 +80,60 @@ OR
     `node seeds/seed.js`
 
 **Personalize your seeds *directly* by changing the files within the `seeds` folder or *dynamically* through the Sequelize functions**
-## Video Walkthrough
+
+## Usage
+To start the application, run the following command(s) in the commend-line.
+
+    `node server.js`
+OR
+
+    `npm run start`
+
+This application lets you do the things:
+```md
+GIVEN a functional Express.js API
+WHEN I add my database name, MySQL username, and MySQL password to an environment variable file
+THEN I am able to connect to a database using Sequelize
+WHEN I enter schema and seed commands
+THEN a development database is created and is seeded with test data
+WHEN I enter the command to invoke the application
+THEN my server is started and the Sequelize models are synced to the MySQL database
+WHEN I open API GET routes in Insomnia for categories, products, or tags
+THEN the data for each of these routes is displayed in a formatted JSON
+WHEN I test API POST, PUT, and DELETE routes in Insomnia
+THEN I am able to successfully create, update, and delete data in my database
+```
+
+## Built With
+
+```diff
++ HTML
++ CSS
++ JavaScript
+
+# Node.js
+! Express.js
+- MySQL 
+- Sequelize
+* npm
+    * dotenv
+
+* Postman
+* Command-line
+* Adobe XD (design wireframe/ERD)
+```
+
+
+## ERD (Entity-Relationship-Diagram)
+> Generated through MySQL Workbench `Reverse Engineer` Database function after seeding and running the application
+![Ecommerce ERD](assets/ecommerce-erd.png "Reverse Engineer in MySQL")
+
+>> showing indexes
+
+![ERD with Indexes](assets/ecommerce-erd_index-showing.png "Reverse Engineer in MySQL and Show Data")
+
+
+## Walthrough Video
 
 
 https://user-images.githubusercontent.com/115776118/216014311-b8921b39-df18-4bdc-a746-9aceb9dde0c0.mp4
