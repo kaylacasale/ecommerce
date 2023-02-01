@@ -124,7 +124,7 @@ router.get('/:id', (req, res) => {
 });
 
 //* in order to do update route below, specify data input being sent (tag_name)
-//* Postman route: 'http://localhost:3001/api/tags/'
+//* Postman route: 'http://localhost:3001/api/tags'
 //* enter object with 'tag_name':
 //* Postman body example entry: {"tag_name": hip hop music}
 //   {
