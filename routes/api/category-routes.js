@@ -128,8 +128,66 @@ router.post('/', (req, res) => {
     })
 });
 
+//* 3 steps to check for functional update route: 
+//* 1) GET request to see category by id: 
+//* GET request URL: 'http://localhost:3001/api/categories/4'
+//* response:
+// {
+//   "id": 4,
+//   "category_name": "Hats",
+//   "products": [
+//       {
+//           "id": 3,
+//           "product_name": "Branded Baseball Hat",
+//           "price": 23,
+//           "category_id": 4
+//       }
+//   ]
+// }
+//* 2) PUT request to update 'category_name' by id entered in request URL:
+//*  PUT request URL: 'http://localhost:3001/api/categories/4'
+//* PUT request Body: 
+// {
+//   "category_name": "Pants"
+//   }
+//* SQL syntax: 
+// UPDATE `category` SET `category_name`=? WHERE `id` = ?
+//* console.log response:
+// [ 1 ] updated category where id=4 in category-routes
+//* 3) GET reques to verify 'category_name' param changed from "Hats" to "Pants"
+//* GET request URL: 'http://localhost:3001/api/categories/4'
+//* response (verifies update): 
+// {
+//   "id": 4,
+//   "category_name": "Pants",
+//   "products": [
+//       {
+//           "id": 3,
+//           "product_name": "Branded Baseball Hat",
+//           "price": 23,
+//           "category_id": 4
+//       }
+//   ]
+// }
 router.put('/:id', (req, res) => {
   // update a category by its `id` value
+  Category.update(req.body, {
+    where: {
+      id: req.params.id
+    }
+  })
+    .then(categoryData => {
+      if (!categoryData) {
+        res.status(404).json({ message: 'No category found with this id!' });
+        return;
+      }
+      res.json(categoryData)
+      console.log(categoryData, `updated category where id=${req.params.id} in category-routes`)
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    })
 });
 
 router.delete('/:id', (req, res) => {
