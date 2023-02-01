@@ -5,13 +5,15 @@ const Tag = require('./Tag');
 const ProductTag = require('./ProductTag');
 
 // Products belongsTo Category
+//* add onDelete set null to allow delete request in category-routes (so foreign key constraint does not fail were product_id references category id)
 Product.belongsTo(Category, {
   foreignKey: 'category_id',
+  onDelete: 'SET NULL'
 })
 // Categories have many Products
 Category.hasMany(Product, {
   foreignKey: 'category_id',
-  onDelete: 'SET NULL'
+  // onDelete: 'SET NULL'
 
 })
 // Products belongToMany Tags (through ProductTag)

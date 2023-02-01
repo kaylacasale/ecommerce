@@ -190,8 +190,50 @@ router.put('/:id', (req, res) => {
     })
 });
 
+//* 3 steps to check for functional delete route:
+//* 1) GET request to see category data by id
+//* Postman GET URL: 'http://localhost:3001/api/categories/5'
+//* ^ response: 
+// {
+//   "id": 5,
+//   "category_name": "Shoes",
+//   "products": [
+//       {
+//           "id": 7,
+//           "product_name": "Running Sneakers",
+//           "price": 90,
+//           "category_id": 5
+//       }
+//   ]
+// }
+//* 2) DELETE request to delete a category by id specified in postman URL
+//* Postman DELETE URL: 'http://localhost:3001/api/categories/5'
+//* Postman response: '1'
+//* SQL backend: 
+// DELETE FROM `category` WHERE `id` = '5'
+//* console.log: 
+// 1 deleted category where id=5 in category-routes
+
+//* successful deletion of category after adding 'onDelete: "SET NULL"' to index.js in models
 router.delete('/:id', (req, res) => {
   // delete a category by its `id` value
+  Category.destroy({
+    where: {
+      id: req.params.id,
+    },
+  })
+    .then(categoryData => {
+      if (!categoryData) {
+        res.status(404).json({ message: 'No category found with this id!' });
+        return;
+      }
+      res.json(categoryData);
+      console.log(categoryData, `deleted category where id=${req.params.id} in category-routes`)
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    })
 });
 
 module.exports = router;
