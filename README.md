@@ -20,7 +20,7 @@ SO THAT my company can compete with other e-commerce companies
 * [Database - MySQL Tables](#database---mysql-tables)
 
 ## Description
-E-Commerce web development has two faces- 1) Front-end development 2) Back-end development. This application focuses on the back-end using MySQL2 and Sequelize packages to connect the Express.js API to a MySQL database and the `dotenv` package to use environment variables to store sensitive data (e.g. username, password, and database name). Lastly, using any API platform that allows developers to design, build, test, and iterate their APIs (e.g. Insomnia), I test all controller routes (`GET`, `POST`, `PUT`, `DELETE`) through **Postman**.
+E-Commerce web development has two faces- 1) Front-end development 2) Back-end development. This application focuses on the back-end using MySQL2 and Sequelize packages to connect the Express.js API to a MySQL database and the `dotenv` package and use environment variables to store sensitive data (e.g. username, password, and database name). Lastly, using any API platform that allows developers to design, build, test, and iterate their APIs (e.g. Insomnia), I test all controller routes (`GET`, `POST`, `PUT`, `DELETE`) through **Postman** with the help of command-line functions in the ScreenCasitfy walkthrough-video below!
 
 ## Installation
 - [x] Clone the GitHub repository locally
@@ -44,7 +44,7 @@ E-Commerce web development has two faces- 1) Front-end development 2) Back-end d
 
 2. To install neccessary packages
 
-This application uses Node.js, Inquirer, MySQL, and console.table in order to run on the command-line.
+This application uses Node.js, Express.js, MySQL2, Sequelize, and the dotenv package to run on the command-line.
 
 > Enter into the terminal in your source folder
 
@@ -70,6 +70,16 @@ OR
 > Enter `schema.sql` content into your MySQL Workbench
 ![Drop MySQL Database](assets/drop-mysql-database.png "Insert schema.sql in MySQL Workbench locally")
 
+4. Seed the Database
+> Enter into the command-line after creating database in SQL:
+
+    `npm run seed`
+
+OR
+
+    `node seeds/seed.js`
+
+**Personalize your seeds *directly* by changing the files within the `seeds` folder or *dynamically* through the Sequelize functions**
 ## Video Walkthrough
 
 
