@@ -2,7 +2,7 @@
 A back-end application for an e-commerce site. This application requires the configuration of Express.js API in order to use Sequelize to interact with a MySQL database and dotenv npm package to secure user information. The application demonstrates the API routes (in the controllers folder) to perfom RESTful CRUD operations visualized through Postman in the walkthrough video below.
 
 # ecommerce
-E-Commerce or Electronic Commerce is a type of business model which enables companies and customers to buy and sell goods online or with the help of the internet. Online shopping is growing so fast and is increasingly relied upon by people around the world. The website plays the most crucial part in creating and maintaining the online presence and reputation of an E-Commerce business. In today's business, web development plays a key role in E-Commerce business. It is also important to know the E-Commerce web development has two faces- 1) Front-end development 2) Back-end development. 
+E-Commerce or Electronic Commerce is a type of business model which enables companies and customers to buy and sell goods online or with the help of the internet. Online shopping is growing so fast and is increasingly relied upon by people around the world. The website plays the most crucial part in creating and maintaining the online presence and reputation of an E-Commerce business. In today's business, web development plays a key role in E-Commerce business. 
 
 ## User Story
 ```md
